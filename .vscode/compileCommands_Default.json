@@ -20,6 +20,16 @@
 		"directory": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Source"
 	},
 	{
+		"file": "D:\\\\ToonTanks\\\\Source\\\\ToonTanks\\\\Pawns\\\\PawnTurret.cpp",
+		"command": "cl.exe @\"D:\\ToonTanks\\.vscode\\compileCommands_Default\\ToonTanks.182.rsp\"",
+		"directory": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Source"
+	},
+	{
+		"file": "D:\\\\ToonTanks\\\\Source\\\\ToonTanks\\\\Pawns\\\\PawnTurret.h",
+		"command": "cl.exe @\"D:\\ToonTanks\\.vscode\\compileCommands_Default\\ToonTanks.182.rsp\"",
+		"directory": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Source"
+	},
+	{
 		"file": "D:\\\\ToonTanks\\\\Source\\\\ToonTanks\\\\ToonTanks.Build.cs",
 		"command": "cl.exe @\"D:\\ToonTanks\\.vscode\\compileCommands_Default\\ToonTanks.182.rsp\"",
 		"directory": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Source"
