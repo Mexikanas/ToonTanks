@@ -5,6 +5,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 
+#define OUT
+
 APawnTank::APawnTank()
 {
     // Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -23,6 +25,7 @@ void APawnTank::BeginPlay()
 {
 	Super::BeginPlay();
 	
+    PlayerControllerRef = Cast<APlayerController>(GetController());
 }
 
 // Called every frame
@@ -32,6 +35,20 @@ void APawnTank::Tick(float DeltaTime)
 
     Rotate();
     Move();
+
+    if (PlayerControllerRef)
+    {
+        FHitResult TraceHitResult;
+        PlayerControllerRef->GetHitResultUnderCursor
+        (
+            ECC_Visibility, 
+            false, 
+            OUT TraceHitResult
+        );
+        FVector HitLocation = TraceHitResult.ImpactPoint;
+
+        RotateTurret(HitLocation);
+    }
 }
 
 // Called to bind functionality to input
@@ -40,6 +57,7 @@ void APawnTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
     PlayerInputComponent->BindAxis("MoveForward", this, &APawnTank::CalculateMoveInput);
     PlayerInputComponent->BindAxis("Turn", this, &APawnTank::CalculateRotateInput);
+    PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &APawnTank::Fire);
 }
 
 void APawnTank::CalculateMoveInput(float Value)
@@ -62,4 +80,10 @@ void APawnTank::Move()
 void APawnTank::Rotate()
 {
     AddActorLocalRotation(RotationDirection, true);
+}
+
+void APawnTank::HandleDestruction()
+{
+    Super::HandleDestruction();
+    // Hide player, TODO - create new function to handle this
 }
