@@ -52,7 +52,7 @@ void AProjectileBase::OnHit
 			this,
 			DamageType
 		);
+		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticle, GetActorLocation());
+		Destroy();
 	}
-	// Play a bunch of effects here during the polish phase - TODO
-	Destroy();
 }
