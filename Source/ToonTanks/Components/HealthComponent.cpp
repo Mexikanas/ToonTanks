@@ -2,6 +2,8 @@
 
 
 #include "HealthComponent.h"
+#include "ToonTanks/GameModes/TankGameModeBase.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
@@ -18,6 +20,9 @@ void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Health = DefaultHealth;
+	GameModeRef = Cast<ATankGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+	GetOwner()->OnTakeAnyDamage.AddDynamic(this, &UHealthComponent::TakeDamage);
 	
 }
 
@@ -30,7 +35,21 @@ void UHealthComponent::TakeDamage
 	AActor* DamageCauser
 )
 {
+	if (Damage == 0 || Health <= 0) {return;}
 
+	Health = FMath::Clamp(Health - Damage, 0.f, DefaultHealth);
+
+	if (Health <= 0)
+	{
+		if (GameModeRef)
+		{
+			GameModeRef->ActorDied(GetOwner());
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("Health Component has no reference to the GameMode."));
+		}
+	}
 }
 
 
