@@ -51,8 +51,6 @@ void APawnTurret::HandleDestruction()
 void APawnTurret::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
     if(!PlayerPawn || ReturnDistanceToPlayer() > FireRange) {return;}
-    UE_LOG(LogTemp, Warning, TEXT("Turn to player"));
     RotateTurret(PlayerPawn->GetActorLocation());
 }
