@@ -23,6 +23,8 @@ AProjectileBase::AProjectileBase()
 
 	ParticleTrail = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Particle Train"));
 	ParticleTrail->SetupAttachment(RootComponent);
+
+	
 }
 
 // Called when the game starts or when spawned
@@ -57,6 +59,7 @@ void AProjectileBase::OnHit
 		);
 		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticle, GetActorLocation());
 		UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
+		GetWorld()->GetFirstPlayerController()->ClientPlayCameraShake(HitShake);
 		Destroy();
 	}
 }
